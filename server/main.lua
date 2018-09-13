@@ -278,6 +278,9 @@ AddEventHandler('esx_carthief:removeCarBlips', function()
 
 	local copsConnected = 0
 	local thievesConnected = 0
+        local requiredCops = Config.RequiredCops
+	local requiredThieves = Config.RequiredThieves
+	local cooldownOnStealingCar = Config.CooldownOnStealingCar
 
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
@@ -291,8 +294,8 @@ AddEventHandler('esx_carthief:removeCarBlips', function()
 
 	TriggerClientEvent('esx_carthief:removeStealCarBlips', source)
 	
-	if copsConnected >= Config.RequiredCops and thievesConnected >= Config.RequiredThieves then
-		if GetGameTimer() - lastTimeCarWasStolen > Config.CooldownOnStealingCar * 1000 then
+	if copsConnected >= requiredCops and thievesConnected >= requiredThieves then
+		if GetGameTimer() - lastTimeCarWasStolen > cooldownOnStealingCar * 1000 then
 			TriggerClientEvent('esx_carthief:addStealCarBlips', source)
 		end
 	end
